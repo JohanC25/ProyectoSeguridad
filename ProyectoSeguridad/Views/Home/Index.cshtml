@@ -3,6 +3,17 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Bienvenido a nuestro sistema!!</h1>
+    <br />
+    <br />
+    <button onclick="location.href='@Url.Action("Index", "Activoes")'" class="btn btn-primary">Agregar Activos</button>
+    <br />
+    <br />
+    <button onclick="location.href='@Url.Action("Index", "Amenazas")'" class="btn btn-primary">Amenazas</button>
+    <br />
+    <br />
+    <button onclick="location.href='@Url.Action("Index", "Controls")'" class="btn btn-primary">Controles</button>
+    <br />
+    <br />
+    <button onclick="location.href='@Url.Action("Index", "Vulnerabilidads")'" class="btn btn-primary">Vulnerabilidades</button>
 </div>

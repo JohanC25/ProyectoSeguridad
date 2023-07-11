@@ -57,7 +57,7 @@ namespace ProyectoSeguridad.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,nombre,categoria,departamento,costoActivo,confidencialidad,integridad,disponibilidad,valor")] Activo activo)
+        public async Task<IActionResult> Create([Bind("id,nombre,categoria,departamento,costoActivo,confidencialidad,integridad,disponibilidad,clas_conf,clas_int,clas_disp,valor")] Activo activo)
         {
             if (ModelState.IsValid)
             {

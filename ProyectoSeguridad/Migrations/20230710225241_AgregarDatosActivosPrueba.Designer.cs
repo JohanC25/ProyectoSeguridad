@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProyectoSeguridad.Data;
 
@@ -10,9 +11,10 @@ using ProyectoSeguridad.Data;
 namespace ProyectoSeguridad.Migrations
 {
     [DbContext(typeof(ProyectoSeguridadContext))]
-    partial class ProyectoSeguridadContextModelSnapshot : ModelSnapshot
+    [Migration("20230710225241_AgregarDatosActivosPrueba")]
+    partial class AgregarDatosActivosPrueba
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -98,35 +100,6 @@ namespace ProyectoSeguridad.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Amenaza");
-                });
-
-            modelBuilder.Entity("ProyectoSeguridad.Models.Control", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
-
-                    b.Property<string>("descripcionControl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("efectividad")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("nombreActivo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("nombreControl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("id");
-
-                    b.ToTable("Control");
                 });
 
             modelBuilder.Entity("ProyectoSeguridad.Models.Vulnerabilidad", b =>
