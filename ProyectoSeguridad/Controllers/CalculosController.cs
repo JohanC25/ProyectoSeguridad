@@ -10,102 +10,87 @@ using ProyectoSeguridad.Models;
 
 namespace ProyectoSeguridad.Controllers
 {
-    public class ControlsController : Controller
+    public class CalculosController : Controller
     {
         private readonly ProyectoSeguridadContext _context;
 
-        public ControlsController(ProyectoSeguridadContext context)
+        public CalculosController(ProyectoSeguridadContext context)
         {
             _context = context;
         }
 
-        // GET: Controls
+        // GET: Calculos
         public async Task<IActionResult> Index()
         {
-              return _context.Control != null ? 
-                          View(await _context.Control.ToListAsync()) :
-                          Problem("Entity set 'ProyectoSeguridadContext.Control'  is null.");
+              return _context.Calculos != null ? 
+                          View(await _context.Calculos.ToListAsync()) :
+                          Problem("Entity set 'ProyectoSeguridadContext.Calculos'  is null.");
         }
-        /*public ActionResult ObtenerNombresActivos()
-        {
-            List<string> nombresActivos = new List<string>();
 
-            // Obtener todos los registros de la clase Activos
-            List<Activo> listaActivos = db.Activo.ToList();
-
-            // Recorrer la lista de Activos y obtener los nombres
-            foreach (var activo in listaActivos)
-            {
-                nombresActivos.Add(activo.nombre);
-            }
-
-            // Devolver los nombres de los Activos como resultado
-            return Json(nombresActivos, JsonRequestBehavior.AllowGet);
-        }*/
-        // GET: Controls/Details/5
+        // GET: Calculos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Control == null)
+            if (id == null || _context.Calculos == null)
             {
                 return NotFound();
             }
 
-            var control = await _context.Control
+            var calculos = await _context.Calculos
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (control == null)
+            if (calculos == null)
             {
                 return NotFound();
             }
 
-            return View(control);
+            return View(calculos);
         }
 
-        // GET: Controls/Create
+        // GET: Calculos/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Controls/Create
+        // POST: Calculos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,nombreControl,descripcionControl,efectividad")] Control control)
+        public async Task<IActionResult> Create([Bind("id,valorActivo,valorVulnerabilidad,valorAmenaza,total")] Calculos calculos)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(control);
+                _context.Add(calculos);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(control);
+            return View(calculos);
         }
 
-        // GET: Controls/Edit/5
+        // GET: Calculos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Control == null)
+            if (id == null || _context.Calculos == null)
             {
                 return NotFound();
             }
 
-            var control = await _context.Control.FindAsync(id);
-            if (control == null)
+            var calculos = await _context.Calculos.FindAsync(id);
+            if (calculos == null)
             {
                 return NotFound();
             }
-            return View(control);
+            return View(calculos);
         }
 
-        // POST: Controls/Edit/5
+        // POST: Calculos/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,nombreControl,descripcionControl,efectividad")] Control control)
+        public async Task<IActionResult> Edit(int id, [Bind("id,valorActivo,valorVulnerabilidad,valorAmenaza,total")] Calculos calculos)
         {
-            if (id != control.id)
+            if (id != calculos.id)
             {
                 return NotFound();
             }
@@ -114,12 +99,12 @@ namespace ProyectoSeguridad.Controllers
             {
                 try
                 {
-                    _context.Update(control);
+                    _context.Update(calculos);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ControlExists(control.id))
+                    if (!CalculosExists(calculos.id))
                     {
                         return NotFound();
                     }
@@ -130,49 +115,49 @@ namespace ProyectoSeguridad.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(control);
+            return View(calculos);
         }
 
-        // GET: Controls/Delete/5
+        // GET: Calculos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Control == null)
+            if (id == null || _context.Calculos == null)
             {
                 return NotFound();
             }
 
-            var control = await _context.Control
+            var calculos = await _context.Calculos
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (control == null)
+            if (calculos == null)
             {
                 return NotFound();
             }
 
-            return View(control);
+            return View(calculos);
         }
 
-        // POST: Controls/Delete/5
+        // POST: Calculos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Control == null)
+            if (_context.Calculos == null)
             {
-                return Problem("Entity set 'ProyectoSeguridadContext.Control'  is null.");
+                return Problem("Entity set 'ProyectoSeguridadContext.Calculos'  is null.");
             }
-            var control = await _context.Control.FindAsync(id);
-            if (control != null)
+            var calculos = await _context.Calculos.FindAsync(id);
+            if (calculos != null)
             {
-                _context.Control.Remove(control);
+                _context.Calculos.Remove(calculos);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ControlExists(int id)
+        private bool CalculosExists(int id)
         {
-          return (_context.Control?.Any(e => e.id == id)).GetValueOrDefault();
+          return (_context.Calculos?.Any(e => e.id == id)).GetValueOrDefault();
         }
     }
 }

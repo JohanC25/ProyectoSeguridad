@@ -21,5 +21,7 @@ namespace ProyectoSeguridad.Data
         public DbSet<ProyectoSeguridad.Models.Vulnerabilidad>? Vulnerabilidad { get; set; }
 
         public DbSet<ProyectoSeguridad.Models.Control>? Control { get; set; }
+
+        public DbSet<ProyectoSeguridad.Models.Calculos>? Calculos { get; set; }
     }
 }

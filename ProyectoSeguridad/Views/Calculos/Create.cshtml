@@ -1,0 +1,48 @@
+﻿@model ProyectoSeguridad.Models.Calculos
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Calculos</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="valorActivo" class="control-label"></label>
+                <input asp-for="valorActivo" class="form-control" />
+                <span asp-validation-for="valorActivo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="valorVulnerabilidad" class="control-label"></label>
+                <input asp-for="valorVulnerabilidad" class="form-control" />
+                <span asp-validation-for="valorVulnerabilidad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="valorAmenaza" class="control-label"></label>
+                <input asp-for="valorAmenaza" class="form-control" />
+                <span asp-validation-for="valorAmenaza" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="total" class="control-label"></label>
+                <input asp-for="total" class="form-control" />
+                <span asp-validation-for="total" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
