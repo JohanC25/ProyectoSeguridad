@@ -60,6 +60,7 @@ namespace ProyectoSeguridad.Controllers
         {
             if (ModelState.IsValid)
             {
+                calculos.total = calculos.valorVulnerabilidad * calculos.valorActivo * calculos.valorAmenaza;
                 _context.Add(calculos);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

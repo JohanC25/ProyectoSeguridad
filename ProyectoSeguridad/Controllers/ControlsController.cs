@@ -18,13 +18,20 @@ namespace ProyectoSeguridad.Controllers
         {
             _context = context;
         }
+        public ActionResult CrearControl()
+        {
+            // Obtiene todos los Activos de la base de datos.
+            var activos = _context.Activo.ToList();
 
+            // Pasa los Activos a la vista.
+            return View(activos);
+        }
         // GET: Controls
         public async Task<IActionResult> Index()
         {
-              return _context.Control != null ? 
-                          View(await _context.Control.ToListAsync()) :
-                          Problem("Entity set 'ProyectoSeguridadContext.Control'  is null.");
+            return _context.Control != null ?
+                        View(await _context.Control.ToListAsync()) :
+                        Problem("Entity set 'ProyectoSeguridadContext.Control'  is null.");
         }
         /*public ActionResult ObtenerNombresActivos()
         {
@@ -63,6 +70,17 @@ namespace ProyectoSeguridad.Controllers
         // GET: Controls/Create
         public IActionResult Create()
         {
+            // Carga los activos desde la base de datos
+            var activos = _context.Activo.ToList();
+
+            // Crea una lista de SelectListItem, donde cada uno tiene el nombre del activo como texto
+            // y el ID del activo como valor.
+            ViewBag.ActivoId = activos.Select(a => new SelectListItem
+            {
+                Text = a.nombre,
+                Value = a.id.ToString()
+            });
+
             return View();
         }
 
@@ -71,7 +89,7 @@ namespace ProyectoSeguridad.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,nombreControl,descripcionControl,efectividad")] Control control)
+        public async Task<IActionResult> Create([Bind("id,nombreControl,descripcionControl,efectividad,ActivoId")] Control control)
         {
             if (ModelState.IsValid)
             {
@@ -103,7 +121,7 @@ namespace ProyectoSeguridad.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,nombreControl,descripcionControl,efectividad")] Control control)
+        public async Task<IActionResult> Edit(int id, [Bind("id,nombreControl,descripcionControl,efectividad, ActivoId")] Control control)
         {
             if (id != control.id)
             {
@@ -165,14 +183,14 @@ namespace ProyectoSeguridad.Controllers
             {
                 _context.Control.Remove(control);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ControlExists(int id)
         {
-          return (_context.Control?.Any(e => e.id == id)).GetValueOrDefault();
+            return (_context.Control?.Any(e => e.id == id)).GetValueOrDefault();
         }
     }
 }

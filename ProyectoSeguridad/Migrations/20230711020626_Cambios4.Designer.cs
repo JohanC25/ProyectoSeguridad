@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProyectoSeguridad.Data;
 
@@ -10,9 +11,10 @@ using ProyectoSeguridad.Data;
 namespace ProyectoSeguridad.Migrations
 {
     [DbContext(typeof(ProyectoSeguridadContext))]
-    partial class ProyectoSeguridadContextModelSnapshot : ModelSnapshot
+    [Migration("20230711020626_Cambios4")]
+    partial class Cambios4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
