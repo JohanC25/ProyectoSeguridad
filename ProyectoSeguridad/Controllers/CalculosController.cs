@@ -87,7 +87,7 @@ namespace ProyectoSeguridad.Controllers
         // POST: Calculos/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,ActivoValor,VulnerabilidadValor,AmenazaValor,total")] Calculos calculos)
+        public async Task<IActionResult> Create([Bind("id,ActivoValor,VulnerabilidadValor,AmenazaValor,total,tieneControl")] Calculos calculos)
         {
             if (ModelState.IsValid)
             {
@@ -99,12 +99,23 @@ namespace ProyectoSeguridad.Controllers
                 // verificar si los valores no son nulos
                 if (valorActivo.HasValue && valorVulnerabilidad.HasValue && valorAmenaza.HasValue)
                 {
+                    
                     calculos.valorActivo = valorActivo.Value;
                     calculos.valorVulnerabilidad = (float)valorVulnerabilidad.Value;
                     calculos.valorAmenaza = valorAmenaza.Value;
 
                     // realizar el cálculo
                     calculos.total = calculos.valorVulnerabilidad * calculos.valorActivo * calculos.valorAmenaza;
+
+                    if (calculos.tieneControl == true)
+                    {
+                        var subtotal = calculos.valorVulnerabilidad * calculos.valorActivo * calculos.valorAmenaza;
+                        calculos.total = subtotal - calculos.valorActivo;
+                    }
+                    else
+                    {
+                        calculos.total = calculos.valorVulnerabilidad * calculos.valorActivo * calculos.valorAmenaza;
+                    }
 
                     _context.Add(calculos);
                     await _context.SaveChangesAsync();
@@ -142,7 +153,7 @@ namespace ProyectoSeguridad.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,ActivoValor,VulnerabilidadValor,AmenazaValor,total")] Calculos calculos)
+        public async Task<IActionResult> Edit(int id, [Bind("id,ActivoValor,VulnerabilidadValor,AmenazaValor,total,tieneControl")] Calculos calculos)
         {
             if (id != calculos.id)
             {
