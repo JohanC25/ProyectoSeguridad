@@ -14,25 +14,26 @@ using ProyectoSeguridad.Models.Control;
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="valorActivo" class="control-label"></label>
-                <input asp-for="valorActivo" class="form-control" min="1" max="9"/>
-                <span asp-validation-for="valorActivo" class="text-danger"></span>
+                <label asp-for="ActivoValor" class="control-label"></label>
+                <select asp-for="ActivoValor" asp-items="ViewBag.Activos" class="form-control" min="1" max="9"></select>
+                <span asp-validation-for="ActivoValor" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="valorVulnerabilidad" class="control-label"></label>
-                <input asp-for="valorVulnerabilidad" class="form-control" min="1" max="10"/>
-                <span asp-validation-for="valorVulnerabilidad" class="text-danger"></span>
+                <label asp-for="VulnerabilidadValor" class="control-label"></label>
+                <select asp-for="VulnerabilidadValor" asp-items="ViewBag.Vulnerabilidades" class="form-control" min="1" max="10"></select>
+                <span asp-validation-for="VulnerabilidadValor" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="valorAmenaza" class="control-label"></label>
-                <input asp-for="valorAmenaza" class="form-control" min="1" max="10"/>
-                <span asp-validation-for="valorAmenaza" class="text-danger"></span>
+                <label asp-for="AmenazaValor" class="control-label"></label>
+                <select asp-for="AmenazaValor" asp-items="ViewBag.Amenazas" class="form-control" min="1" max="10"></select>
+                <span asp-validation-for="AmenazaValor" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="total" class="control-label"></label>
                 <input asp-for="total" class="form-control" disabled="disabled" />
                 <span asp-validation-for="total" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

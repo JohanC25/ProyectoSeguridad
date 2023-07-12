@@ -18,7 +18,16 @@ namespace ProyectoSeguridad.Controllers
         {
             _context = context;
         }
+        public ActionResult CrearControl()
+        {
+            // Obtiene todos los Activos de la base de datos.
+            var activos = _context.Activo.ToList();
+            var vulner = _context.Vulnerabilidad.ToList();
+            var amen = _context.Amenaza.ToList();
 
+            // Pasa los Activos a la vista.
+            return View(activos);
+        }
         // GET: Calculos
         public async Task<IActionResult> Index()
         {
@@ -48,6 +57,28 @@ namespace ProyectoSeguridad.Controllers
         // GET: Calculos/Create
         public IActionResult Create()
         {
+            // Carga los activos desde la base de datos
+            var activos = _context.Activo.ToList();
+            var vulner = _context.Vulnerabilidad.ToList();
+            var amen = _context.Amenaza.ToList();
+
+            // Crea una lista de SelectListItem, donde cada uno tiene el nombre del activo como texto
+            // y el ID del activo como valor.
+            ViewBag.Activos = activos.Select(a => new SelectListItem
+            {
+                Text = a.nombre,
+                Value = a.valor.ToString()
+            });
+            ViewBag.Vulnerabilidades = vulner.Select(b => new SelectListItem
+            {
+                Text = b.nombreVulnerabilidad,
+                Value = b.cvss.ToString()
+            });
+            ViewBag.Amenazas = amen.Select(c => new SelectListItem
+            {
+                Text = c.nombreAmenaza,
+                Value = c.valor.ToString()
+            });
             return View();
         }
 

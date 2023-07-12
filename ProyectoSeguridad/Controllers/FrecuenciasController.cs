@@ -58,17 +58,17 @@ namespace ProyectoSeguridad.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,actividad,frecuencia,responsable")] Frecuencia frecuencia)
+        public async Task<IActionResult> Create([Bind("id,actividad,frecuencia,responsable")] Frecuencia frecuencia1)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(frecuencia);
+                _context.Add(frecuencia1);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewBag.Frecuencias = new SelectList(Frecuencia.Frecuencias);
             ViewBag.Responsables = new SelectList(Frecuencia.Responsables);
-            return View(frecuencia);
+            return View(frecuencia1);
         }
 
         // GET: Frecuencias/Edit/5
@@ -94,9 +94,9 @@ namespace ProyectoSeguridad.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,actividad,frecuencia,responsable")] Frecuencia frecuencia)
+        public async Task<IActionResult> Edit(int id, [Bind("id,actividad,frecuencia,responsable")] Frecuencia frecuencia1)
         {
-            if (id != frecuencia.id)
+            if (id != frecuencia1.id)
             {
                 return NotFound();
             }
@@ -105,12 +105,12 @@ namespace ProyectoSeguridad.Controllers
             {
                 try
                 {
-                    _context.Update(frecuencia);
+                    _context.Update(frecuencia1);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FrecuenciaExists(frecuencia.id))
+                    if (!FrecuenciaExists(frecuencia1.id))
                     {
                         return NotFound();
                     }
@@ -123,7 +123,7 @@ namespace ProyectoSeguridad.Controllers
             }
             ViewBag.Frecuencias = new SelectList(Frecuencia.Frecuencias);
             ViewBag.Responsables = new SelectList(Frecuencia.Responsables);
-            return View(frecuencia);
+            return View(frecuencia1);
         }
 
         // GET: Frecuencias/Delete/5
