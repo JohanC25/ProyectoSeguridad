@@ -31,9 +31,9 @@ namespace ProyectoSeguridad.Controllers
         // GET: Calculos
         public async Task<IActionResult> Index()
         {
-              return _context.Calculos != null ? 
-                          View(await _context.Calculos.ToListAsync()) :
-                          Problem("Entity set 'ProyectoSeguridadContext.Calculos'  is null.");
+            return _context.Calculos != null ?
+                        View(await _context.Calculos.ToListAsync()) :
+                        Problem("Entity set 'ProyectoSeguridadContext.Calculos'  is null.");
         }
 
         // GET: Calculos/Details/5
@@ -57,47 +57,69 @@ namespace ProyectoSeguridad.Controllers
         // GET: Calculos/Create
         public IActionResult Create()
         {
-            // Carga los activos desde la base de datos
+            // Carga los activos, vulnerabilidades y amenazas desde la base de datos
             var activos = _context.Activo.ToList();
-            /*var vulner = _context.Vulnerabilidad.ToList();
-            var amen = _context.Amenaza.ToList();*/
+            var vulnerabilidades = _context.Vulnerabilidad.ToList();
+            var amenazas = _context.Amenaza.ToList();
 
-            // Crea una lista de SelectListItem, donde cada uno tiene el nombre del activo como texto
-            // y el ID del activo como valor.
+            // Crea una lista de SelectListItem, donde cada uno tiene el nombre del activo, vulnerabilidad y amenaza como texto
+            // y el ID del activo, cvss de vulnerabilidad y valor de amenaza como valor.
             ViewBag.Activos = activos.Select(a => new SelectListItem
             {
                 Text = a.nombre,
-                Value = a.valor.ToString()
+                Value = a.id.ToString()
             });
-            /*ViewBag.Vulnerabilidades = vulner.Select(b => new SelectListItem
+            ViewBag.Vulnerabilidades = vulnerabilidades.Select(v => new SelectListItem
             {
-                Text = b.nombreVulnerabilidad,
-                Value = b.cvss.ToString()
+                Text = v.nombreVulnerabilidad,
+                Value = v.id.ToString()
             });
-            ViewBag.Amenazas = amen.Select(c => new SelectListItem
+            ViewBag.Amenazas = amenazas.Select(a => new SelectListItem
             {
-                Text = c.nombreAmenaza,
-                Value = c.valor.ToString()
-            });*/
+                Text = a.nombreAmenaza,
+                Value = a.id.ToString()
+            });
+
             return View();
         }
 
+
         // POST: Calculos/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,valorActivo,valorVulnerabilidad,valorAmenaza,total")] Calculos calculos)
+        public async Task<IActionResult> Create([Bind("id,ActivoValor,VulnerabilidadValor,AmenazaValor,total")] Calculos calculos)
         {
             if (ModelState.IsValid)
             {
-                calculos.total = calculos.valorVulnerabilidad * calculos.valorActivo * calculos.valorAmenaza;
-                _context.Add(calculos);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                // obtener los valores numéricos del Activo, Vulnerabilidad, y Amenaza seleccionados
+                var valorActivo = _context.Activo.FirstOrDefault(a => a.id == calculos.ActivoValor)?.valor;
+                var valorVulnerabilidad = _context.Vulnerabilidad.FirstOrDefault(v => v.id == calculos.VulnerabilidadValor)?.cvss;
+                var valorAmenaza = _context.Amenaza.FirstOrDefault(a => a.id == calculos.AmenazaValor)?.valor;
+
+                // verificar si los valores no son nulos
+                if (valorActivo.HasValue && valorVulnerabilidad.HasValue && valorAmenaza.HasValue)
+                {
+                    calculos.valorActivo = valorActivo.Value;
+                    calculos.valorVulnerabilidad = (float)valorVulnerabilidad.Value;
+                    calculos.valorAmenaza = valorAmenaza.Value;
+
+                    // realizar el cálculo
+                    calculos.total = calculos.valorVulnerabilidad * calculos.valorActivo * calculos.valorAmenaza;
+
+                    _context.Add(calculos);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    // mostrar un mensaje de error si alguno de los valores es nulo
+                    ModelState.AddModelError("", "No se pudo encontrar el Activo, la Vulnerabilidad o la Amenaza seleccionados.");
+                }
             }
             return View(calculos);
         }
+
+
 
         // GET: Calculos/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -120,7 +142,7 @@ namespace ProyectoSeguridad.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,valorActivo,valorVulnerabilidad,valorAmenaza,total")] Calculos calculos)
+        public async Task<IActionResult> Edit(int id, [Bind("id,ActivoValor,VulnerabilidadValor,AmenazaValor,total")] Calculos calculos)
         {
             if (id != calculos.id)
             {
@@ -182,14 +204,14 @@ namespace ProyectoSeguridad.Controllers
             {
                 _context.Calculos.Remove(calculos);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CalculosExists(int id)
         {
-          return (_context.Calculos?.Any(e => e.id == id)).GetValueOrDefault();
+            return (_context.Calculos?.Any(e => e.id == id)).GetValueOrDefault();
         }
     }
 }

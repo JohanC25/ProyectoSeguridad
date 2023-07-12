@@ -24,6 +24,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.total)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.tieneControl)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -42,6 +45,14 @@
             <td>
                 @Html.DisplayFor(modelItem => item.total)
             </td>
+				@if (item.tieneControl == true)
+                {
+                    <td>Con Control</td>
+                }
+                else
+                {
+                    <td>Sin Control</td>
+                }
             <td>
                 <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.id">Details</a> |

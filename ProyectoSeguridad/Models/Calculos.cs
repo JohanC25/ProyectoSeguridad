@@ -14,6 +14,8 @@ namespace ProyectoSeguridad.Models
         public int valorAmenaza { get; set; }
         [DisplayName("Total Riesgo")]
         public float total { get; set; }
+        [DisplayName("Tiene Control?")]
+        public bool tieneControl { get; set; }
 
         // Clave foránea
         public int ActivoValor { get; set; }
