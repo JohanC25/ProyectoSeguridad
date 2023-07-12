@@ -64,13 +64,46 @@
                 @Html.DisplayFor(modelItem => item.costoActivo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.confidencialidad)
+                    @if (item.confidencialidad == "1")
+                    {
+                        <span>Bajo</span>
+                    }
+                    else if (item.confidencialidad == "2")
+                    {
+                        <span>Medio</span>
+                    }
+                    else
+                    {
+                        <span>Alto</span>
+                    }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.integridad)
+                    @if (item.integridad == "1")
+                    {
+                        <span>Bajo</span>
+                    }
+                    else if (item.integridad == "2")
+                    {
+                        <span>Medio</span>
+                    }
+                    else
+                    {
+                        <span>Alto</span>
+                    }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.disponibilidad)
+                    @if (item.disponibilidad == "1")
+                    {
+                        <span>Bajo</span>
+                    }
+                    else if (item.disponibilidad == "2")
+                    {
+                        <span>Medio</span>
+                    }
+                    else
+                    {
+                        <span>Alto</span>
+                    }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.clas_conf)
