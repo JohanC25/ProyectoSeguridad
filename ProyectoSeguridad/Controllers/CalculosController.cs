@@ -22,8 +22,8 @@ namespace ProyectoSeguridad.Controllers
         {
             // Obtiene todos los Activos de la base de datos.
             var activos = _context.Activo.ToList();
-            var vulner = _context.Vulnerabilidad.ToList();
-            var amen = _context.Amenaza.ToList();
+            /*var vulner = _context.Vulnerabilidad.ToList();
+            var amen = _context.Amenaza.ToList();*/
 
             // Pasa los Activos a la vista.
             return View(activos);
@@ -59,8 +59,8 @@ namespace ProyectoSeguridad.Controllers
         {
             // Carga los activos desde la base de datos
             var activos = _context.Activo.ToList();
-            var vulner = _context.Vulnerabilidad.ToList();
-            var amen = _context.Amenaza.ToList();
+            /*var vulner = _context.Vulnerabilidad.ToList();
+            var amen = _context.Amenaza.ToList();*/
 
             // Crea una lista de SelectListItem, donde cada uno tiene el nombre del activo como texto
             // y el ID del activo como valor.
@@ -69,7 +69,7 @@ namespace ProyectoSeguridad.Controllers
                 Text = a.nombre,
                 Value = a.valor.ToString()
             });
-            ViewBag.Vulnerabilidades = vulner.Select(b => new SelectListItem
+            /*ViewBag.Vulnerabilidades = vulner.Select(b => new SelectListItem
             {
                 Text = b.nombreVulnerabilidad,
                 Value = b.cvss.ToString()
@@ -78,7 +78,7 @@ namespace ProyectoSeguridad.Controllers
             {
                 Text = c.nombreAmenaza,
                 Value = c.valor.ToString()
-            });
+            });*/
             return View();
         }
 
