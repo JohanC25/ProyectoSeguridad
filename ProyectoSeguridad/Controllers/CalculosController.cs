@@ -110,7 +110,7 @@ namespace ProyectoSeguridad.Controllers
                     if (calculos.tieneControl == true)
                     {
                         var subtotal = calculos.valorVulnerabilidad * calculos.valorActivo * calculos.valorAmenaza;
-                        calculos.total = subtotal - calculos.valorActivo;
+                        calculos.total = subtotal - (calculos.valorActivo * 10);
                     }
                     else
                     {
